@@ -22,7 +22,10 @@ public class UpdateScoreboard implements org.bukkit.event.Listener {
 
         if(!players.contains(player)) {
             String owner = Bukkit.getOfflinePlayer(event.getArea().getOwnerUID()).getName();
-            assert owner != null;
+            if(owner == null) {
+                new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_owner", "&aWilderness");
+                new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_name", "");
+            } else
             if (owner.equalsIgnoreCase(player.getName()))
                 new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_owner", "&3Dein Land");
             else
