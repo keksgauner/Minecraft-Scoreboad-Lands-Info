@@ -7,6 +7,8 @@ import me.angeschossen.lands.api.land.Land;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
+import java.util.UUID;
+
 public class UpdateScoreboard implements org.bukkit.event.Listener {
 
     @EventHandler
@@ -14,8 +16,8 @@ public class UpdateScoreboard implements org.bukkit.event.Listener {
         Player player = event.getLandPlayer().getPlayer();
         Area area = event.getArea();
 
-        String owner = area.getOwnerUID() + "";
-        if (owner.equalsIgnoreCase(player.getName()))
+        UUID owner = area.getOwnerUID();
+        if (owner.equals(player.getUniqueId()))
             new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_owner", "&3Dein Land");
         else
             new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_owner", "&6" + owner);
@@ -26,7 +28,7 @@ public class UpdateScoreboard implements org.bukkit.event.Listener {
     @EventHandler
     public void onPlayerAreaLeaveEvent(PlayerAreaLeaveEvent event) {
         Player player = event.getLandPlayer().getPlayer();
-        new CreateScoreboad(player.getScoreboard()).setTeamPrefix("plot_owner", "&aFreies Land");
+        new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_owner", "&aWilderness");
         new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_name", "");
     }
 }
