@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class UpdateScoreboard implements org.bukkit.event.Listener {
 
     // Es soll nicht doppelt aufgerufen werden
-    private static ArrayList<Player> players;
+    private static final ArrayList<Player> players = new ArrayList<>();
 
     @EventHandler
     public void onPlayerLocationAreaEvent(PlayerLocationAreaEvent event) {
@@ -36,8 +36,7 @@ public class UpdateScoreboard implements org.bukkit.event.Listener {
     @EventHandler
     public void onPlayerAreaLeaveEvent(PlayerAreaLeaveEvent event) {
         Player player = event.getLandPlayer().getPlayer();
-        if(players.contains(player))
-            players.remove(player);
+        players.remove(player);
         new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_owner", "&aWilderness");
         new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_name", "");
     }
@@ -46,7 +45,6 @@ public class UpdateScoreboard implements org.bukkit.event.Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        if(players.contains(player))
-            players.remove(player);
+        players.remove(player);
     }
 }
