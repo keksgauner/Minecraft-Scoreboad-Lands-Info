@@ -3,7 +3,8 @@ package de.keksgauner;
 import me.angeschossen.lands.api.events.internal.PlayerLocationAreaEvent;
 import me.angeschossen.lands.api.events.player.PlayerAreaLeaveEvent;
 import me.angeschossen.lands.api.land.Area;
-import me.angeschossen.lands.api.land.Land;
+import me.angeschossen.lands.api.player.LandPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
@@ -17,15 +18,12 @@ public class UpdateScoreboard implements org.bukkit.event.Listener {
         Player player = event.getLandPlayer().getPlayer();
         Area area = event.getArea();
 
-        UUID owner = area.getOwnerUID();
-        if (owner.equals(player.getUniqueId()))
+        String owner = Bukkit.getOfflinePlayer(event.getArea().getOwnerUID()).getName();
+        assert owner != null;
+        if (owner.equalsIgnoreCase(player.getName()))
             new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_owner", "&3Dein Land");
         else
-            try {
-                new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_owner", "&6" + PlayerFetcher.getPlayerOf(owner));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_owner", "&6" + owner);
 
         new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_name", "&9" + area.getLand().getName());
     }
