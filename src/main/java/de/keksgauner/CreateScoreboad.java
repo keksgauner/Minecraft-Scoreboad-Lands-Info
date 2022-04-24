@@ -1,5 +1,6 @@
 package de.keksgauner;
 
+import me.angeschossen.lands.api.integration.LandsIntegration;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -12,6 +13,9 @@ public class CreateScoreboad {
     private Objective obj;
 
     public CreateScoreboad(Player player) {
+        new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_owner", "&aWilderness");
+        new CreateScoreboad(player.getScoreboard()).setTeamPrefix("lands_name", "");
+
         String name = sText("&8&l> &cKrafity &8&l<");
 
         scb = Bukkit.getScoreboardManager().getNewScoreboard();
@@ -49,6 +53,10 @@ public class CreateScoreboad {
 
     public void setTeamPrefix(String team, String prefix) {
         getTeam(team).prefix(cText(prefix));
+    }
+
+    public void setTitle(String title) {
+        obj.displayName(cText(title));
     }
 
     public String createTeam(String team, String key) {
