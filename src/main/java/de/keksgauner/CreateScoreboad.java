@@ -12,7 +12,7 @@ public class CreateScoreboad {
     private Objective obj;
 
     public CreateScoreboad(Player player) {
-        String name = sText("&8&l> Krafity &8&l<");
+        String name = sText("&8&l> &cKrafity &8&l<");
 
         scb = Bukkit.getScoreboardManager().getNewScoreboard();
         obj = scb.registerNewObjective("Infos", "dummy", name, RenderType.INTEGER);
